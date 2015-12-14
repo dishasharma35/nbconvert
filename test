@@ -1,0 +1,76 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "af_strip_plot.html    exome.txt             only_variant.csv\r\n",
+      "ankit.ipynb           kcnq1_nm.txt          other.ods\r\n",
+      "Ankit_result          kcnq1_nm.txt~         set2.csv\r\n",
+      "asiangenome.csv       merged_pc_enst_fpkm   Untitled Document~\r\n",
+      "DPYD_Sams_plot.ipynb  merged_pc_enst_fpkm1  Untitled.ipynb\r\n"
+     ]
+    }
+   ],
+   "source": [
+    "ls\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "\n",
+    "with open('merged_pc_enst_fpkm1', 'r') as f:\n",
+    "    data = f.readlines()\n",
+    "\n",
+    "result = {}\n",
+    "for line in data:\n",
+    "    cols = line.rstrip('\\n').rstrip('\\r').split('\\t')\n",
+    "    if cols[2] in result:\n",
+    "        if cols[0] in result[cols[2]]:\n",
+    "            print \"Hey something is fishy\"\n",
+    "        else:\n",
+    "            result[cols[2]][cols[0]] = cols[1]\n",
+    "    else:\n",
+    "        result[cols[2]] = {cols[0]: cols[1]}\n",
+    "\n",
+    "df = pd.DataFrame(result).T\n",
+    "df.to_csv('disha_output.csv')"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 2",
+   "language": "python",
+   "name": "python2"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.10"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}
